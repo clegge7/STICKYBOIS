@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "Timer";
+}
+<script type="text/javascript" src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="~/Scripts/moment.min.js"></script>
+<script type="text/javascript" src="~/Scripts/bootstrap.min.js"></script>
+
+<div class="jumbotron">
+    <h1 style="text-align:center">S T I C K Y B O I S</h1>
+    <p class="lead" style="text-align:center">For When The Ball Is Inert</p>
+</div>
+
+<p style="text-align:center;font-size:32px;">Time that the ball has been up:</p>
+<p id="timer" style="text-align:center; font-size:128px"></p>
+
+<script type="text/javascript">
+    // Set the date we're counting down to
+    var countDownDate = new Date("Aug 10, 2018 10:30:37").getTime();
+
+    $.ajax({
+        type: 'POST',
+        url: '/Records/GetCurrentThrowTime',
+        dataType: 'json',
+        success: function (data) {
+            countDownDate = new Date(data[0].StartTime).getTime();
+        }
+    })
+    
+    // Update the count down every 1 second
+    var x = setInterval(function () {
+
+        // Get todays date and time
+        var now = new Date().getTime();
+
+        // Find the distance between now and the count down date
+        var distance = now - countDownDate;
+
+        // Time calculations for days, hours, minutes and seconds
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // Output the result in an element with id="demo"
+        document.getElementById("timer").innerHTML = days + "d " + hours + "h "
+            + minutes + "m " + seconds + "s ";
+
+        // If the count down is over, write some text
+        if (distance < 0) {
+            clearInterval(x);
+            document.getElementById("timer").innerHTML = "EXPIRED";
+        }
+    }, 1000);
+</script>

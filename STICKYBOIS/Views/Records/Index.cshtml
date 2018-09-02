@@ -1,0 +1,51 @@
+﻿@model IEnumerable<STICKYBOIS.Models.Record>
+
+@{
+    ViewBag.Title = "Records";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.StartTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Thrower)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        if (item.StartTime != null)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Thrower)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditRecord", new { id = item.id })
+                </td>
+            </tr>
+        }
+
+    }
+
+</table>
